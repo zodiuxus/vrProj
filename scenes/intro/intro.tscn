@@ -1,0 +1,462 @@
+[gd_scene load_steps=27 format=3 uid="uid://bn84664dyjsab"]
+
+[ext_resource type="Script" uid="uid://csp6jkhqmbj60" path="res://scenes/intro/intro.gd" id="1_8twl8"]
+[ext_resource type="Script" uid="uid://cm0ywxcc1ofxw" path="res://scenes/main/world.gd" id="3_14p5w"]
+[ext_resource type="Script" uid="uid://bjbedruaijwd7" path="res://scenes/intro/spin.gd" id="4_8twl8"]
+[ext_resource type="PackedScene" uid="uid://0hpdmjnq7137" path="res://assets/models/house.glb" id="4_xyqjm"]
+[ext_resource type="Texture2D" uid="uid://b84jfo0hl231u" path="res://assets/images/wasd.png" id="5_ir5dn"]
+[ext_resource type="PackedScene" uid="uid://cb33wsu4pfv1c" path="res://assets/models/finished/rocks/large.glb" id="5_jbxqg"]
+[ext_resource type="Texture2D" uid="uid://cwbrkkl1g3n7f" path="res://assets/images/mouse.png" id="6_1rrv8"]
+[ext_resource type="PackedScene" uid="uid://djvl20f4otacc" path="res://assets/models/finished/rocks/small.glb" id="6_hs2o6"]
+[ext_resource type="PackedScene" path="res://assets/models/giant_low_poly_tree/scene.gltf" id="7_ivhsj"]
+[ext_resource type="PackedScene" uid="uid://btr1uh1m0eujt" path="res://assets/models/pool.glb" id="8_pykff"]
+[ext_resource type="PackedScene" uid="uid://b853klkhjo3rr" path="res://assets/models/doghouse.glb" id="9_ixtfl"]
+[ext_resource type="PackedScene" uid="uid://bcbwr71873xs6" path="res://assets/models/fence.glb" id="10_nvap7"]
+[ext_resource type="PackedScene" uid="uid://cochsa5vqvh88" path="res://assets/models/table.glb" id="11_t8y8d"]
+[ext_resource type="PackedScene" uid="uid://du25mquc2em3d" path="res://assets/models/bench.glb" id="12_wuu8q"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_iatiw"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_w6gc6"]
+sky_top_color = Color(0.4734108, 0.49635386, 0.6870693, 1)
+sky_horizon_color = Color(0.69370574, 0.6440426, 0.6133832, 1)
+
+[sub_resource type="Sky" id="Sky_dtyxf"]
+sky_material = SubResource("ProceduralSkyMaterial_w6gc6")
+
+[sub_resource type="Environment" id="Environment_iubku"]
+background_mode = 2
+sky = SubResource("Sky_dtyxf")
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_y2s00"]
+auto_exposure_enabled = true
+dof_blur_far_enabled = true
+dof_blur_far_distance = 0.01
+dof_blur_near_enabled = true
+
+[sub_resource type="Compositor" id="Compositor_526id"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_1r2wy"]
+frequency = 0.0006
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7te0o"]
+noise = SubResource("FastNoiseLite_1r2wy")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_smv1n"]
+albedo_color = Color(0.4901812, 0.5292261, 0.1365138, 1)
+roughness_texture = SubResource("NoiseTexture2D_7te0o")
+
+[sub_resource type="BoxMesh" id="BoxMesh_ays12"]
+material = SubResource("StandardMaterial3D_smv1n")
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3c7vn"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xwd6a"]
+
+[node name="Intro" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8twl8")
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_iatiw")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="ColorRect" type="ColorRect" parent="SubViewport"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.70980394)
+
+[node name="World" type="Node3D" parent="SubViewport"]
+transform = Transform3D(0.99995226, -0.0063752853, 0.0074039325, 0.006381678, 0.99997926, -0.00084013294, -0.0073984237, 0.00088733796, 0.9999722, 0, 0, 0)
+script = ExtResource("3_14p5w")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewport/World"]
+environment = SubResource("Environment_iubku")
+camera_attributes = SubResource("CameraAttributesPractical_y2s00")
+compositor = SubResource("Compositor_526id")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewport/World"]
+transform = Transform3D(0.65647644, 0.59498817, -0.46371093, -0.17703256, 0.7190683, 0.6720121, 0.73327905, -0.3590681, 0.5773836, 0, 7.83, 0)
+light_color = Color(0.4745098, 0.49803922, 0.6862745, 1)
+shadow_enabled = true
+
+[node name="ground" type="MeshInstance3D" parent="SubViewport/World"]
+transform = Transform3D(51.42, 0, 0, 0, 1, 0, 0, 0, 60.461, -6.8679214, 0, 0)
+mesh = SubResource("BoxMesh_ays12")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="SubViewport/World/ground"]
+input_ray_pickable = false
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+physics_material_override = SubResource("PhysicsMaterial_3c7vn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SubViewport/World/ground/StaticBody3D"]
+shape = SubResource("BoxShape3D_xwd6a")
+
+[node name="house" parent="SubViewport/World" instance=ExtResource("4_xyqjm")]
+transform = Transform3D(-1.8043584, 0, -0.86272305, 0, 2, 0, 0.86272305, 0, -1.8043584, -13.867473, 12.65019, 20.153341)
+
+[node name="decor" type="Node3D" parent="SubViewport/World"]
+
+[node name="rocks" type="Node3D" parent="SubViewport/World/decor"]
+transform = Transform3D(0.8532415, 0, 0.521516, 0, 1, 0, -0.521516, 0, 0.8532415, 6.7642365, -1.9073486e-06, -3.8677158)
+
+[node name="large" parent="SubViewport/World/decor/rocks" instance=ExtResource("5_jbxqg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9191494, 0.5534545, -24.214144)
+
+[node name="large2" parent="SubViewport/World/decor/rocks" instance=ExtResource("5_jbxqg")]
+transform = Transform3D(1.2404611, 0, -1.0804086, 0, 1.6450002, 0, 1.0804086, 0, 1.2404611, -0.75112486, 0.55345166, -18.450794)
+
+[node name="large3" parent="SubViewport/World/decor/rocks" instance=ExtResource("5_jbxqg")]
+transform = Transform3D(0.7986565, 0, -0.60178715, 0, 1, 0, 0.60178715, 0, 0.7986565, -2.4960232, 0.5534545, -18.506144)
+
+[node name="small" parent="SubViewport/World/decor/rocks" instance=ExtResource("6_hs2o6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.1212635, 0.52734995, -12.252343)
+
+[node name="small2" parent="SubViewport/World/decor/rocks" instance=ExtResource("6_hs2o6")]
+transform = Transform3D(2.335, 0, 0, 0, 2.335, 0, 0, 0, 2.335, -8.987394, 0.527349, -6.88249)
+
+[node name="large4" parent="SubViewport/World/decor/rocks" instance=ExtResource("5_jbxqg")]
+transform = Transform3D(2.16, 0, 0, 0, 2.150056, -0.20702682, 0, 0.20702682, 2.150056, 5.924761, 0.5534545, -28.547878)
+
+[node name="large5" parent="SubViewport/World/decor/rocks" instance=ExtResource("5_jbxqg")]
+transform = Transform3D(2.8638883, -0.10501401, 1.2460909, 0.114511594, 3.1229014, 0, -1.245254, 0.045661394, 2.8658128, 4.2211742, 0.5534545, -31.708876)
+
+[node name="paths" type="Node3D" parent="SubViewport/World/decor"]
+
+[node name="path" type="Node3D" parent="SubViewport/World/decor/paths"]
+transform = Transform3D(0.47245848, 0, -0.8813529, 0, 1, 0, 0.8813529, 0, 0.47245848, 13.611446, 0, 21.979498)
+
+[node name="large6" parent="SubViewport/World/decor/paths/path" instance=ExtResource("5_jbxqg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.1944885, 0.28067505, 11.695976)
+
+[node name="large7" parent="SubViewport/World/decor/paths/path" instance=ExtResource("5_jbxqg")]
+transform = Transform3D(0.9244596, 0, -0.38128012, 0, 1, 0, 0.38128012, 0, 0.9244596, -6.9999685, 0.27944934, 12.519598)
+
+[node name="large8" parent="SubViewport/World/decor/paths/path" instance=ExtResource("5_jbxqg")]
+transform = Transform3D(0.79418135, 0, 0.6076808, 0, 1, 0, -0.6076808, 0, 0.79418135, -10.092496, 0.2827487, 4.5004535)
+
+[node name="large9" parent="SubViewport/World/decor/paths/path" instance=ExtResource("5_jbxqg")]
+transform = Transform3D(0.48131007, 0, -0.8765504, 0, 1, 0, 0.8765504, 0, 0.48131007, -9.204499, 0.2827487, 13.744495)
+
+[node name="small3" parent="SubViewport/World/decor/paths/path" instance=ExtResource("6_hs2o6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.463474, 0.18673277, 14.378912)
+
+[node name="large10" parent="SubViewport/World/decor/paths/path" instance=ExtResource("5_jbxqg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.2640195, 0.29005826, 4.545941)
+
+[node name="small4" parent="SubViewport/World/decor/paths/path" instance=ExtResource("6_hs2o6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.745773, 0.16319752, 16.686535)
+
+[node name="path3" type="Node3D" parent="SubViewport/World/decor/paths"]
+transform = Transform3D(0.99806285, 0, -0.062215626, 0, 1, 0, 0.062215626, 0, 0.99806285, 16.820911, 0, -1.5231514)
+
+[node name="large6" parent="SubViewport/World/decor/paths/path3" instance=ExtResource("5_jbxqg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.1944885, 0.28067505, 11.695976)
+
+[node name="large7" parent="SubViewport/World/decor/paths/path3" instance=ExtResource("5_jbxqg")]
+transform = Transform3D(0.9244596, 0, -0.38128012, 0, 1, 0, 0.38128012, 0, 0.9244596, -6.9999685, 0.27944934, 12.519598)
+
+[node name="large8" parent="SubViewport/World/decor/paths/path3" instance=ExtResource("5_jbxqg")]
+transform = Transform3D(0.79418135, 0, 0.6076808, 0, 1, 0, -0.6076808, 0, 0.79418135, -10.092496, 0.2827487, 4.5004535)
+
+[node name="large9" parent="SubViewport/World/decor/paths/path3" instance=ExtResource("5_jbxqg")]
+transform = Transform3D(0.48131007, 0, -0.8765504, 0, 1, 0, 0.8765504, 0, 0.48131007, -9.204499, 0.2827487, 13.744495)
+
+[node name="small3" parent="SubViewport/World/decor/paths/path3" instance=ExtResource("6_hs2o6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.463474, 0.18673277, 14.378912)
+
+[node name="large10" parent="SubViewport/World/decor/paths/path3" instance=ExtResource("5_jbxqg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.2640195, 0.29005826, 4.545941)
+
+[node name="small4" parent="SubViewport/World/decor/paths/path3" instance=ExtResource("6_hs2o6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.745773, 0.16319752, 16.686535)
+
+[node name="path4" type="Node3D" parent="SubViewport/World/decor/paths"]
+transform = Transform3D(0.98743045, 0, 0.15805474, 0, 1, 0, -0.15805474, 0, 0.98743045, 14.443377, 0, -12.788577)
+
+[node name="large6" parent="SubViewport/World/decor/paths/path4" instance=ExtResource("5_jbxqg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.1944885, 0.28067505, 11.695976)
+
+[node name="large7" parent="SubViewport/World/decor/paths/path4" instance=ExtResource("5_jbxqg")]
+transform = Transform3D(0.9244596, 0, -0.38128012, 0, 1, 0, 0.38128012, 0, 0.9244596, -6.9999685, 0.27944934, 12.519598)
+
+[node name="large8" parent="SubViewport/World/decor/paths/path4" instance=ExtResource("5_jbxqg")]
+transform = Transform3D(0.79418135, 0, 0.6076808, 0, 1, 0, -0.6076808, 0, 0.79418135, -10.092496, 0.2827487, 4.5004535)
+
+[node name="large9" parent="SubViewport/World/decor/paths/path4" instance=ExtResource("5_jbxqg")]
+transform = Transform3D(0.48131007, 0, -0.8765504, 0, 1, 0, 0.8765504, 0, 0.48131007, -9.204499, 0.2827487, 13.744495)
+
+[node name="small3" parent="SubViewport/World/decor/paths/path4" instance=ExtResource("6_hs2o6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.463474, 0.18673277, 14.378912)
+
+[node name="large10" parent="SubViewport/World/decor/paths/path4" instance=ExtResource("5_jbxqg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.2640195, 0.29005826, 4.545941)
+
+[node name="small4" parent="SubViewport/World/decor/paths/path4" instance=ExtResource("6_hs2o6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.745773, 0.16319752, 16.686535)
+
+[node name="path5" type="Node3D" parent="SubViewport/World/decor/paths"]
+transform = Transform3D(-0.9144377, 0, -0.40472683, 0, 1, 0, 0.40472683, 0, -0.9144377, -9.541821, -1.9073486e-06, 6.342635)
+
+[node name="large6" parent="SubViewport/World/decor/paths/path5" instance=ExtResource("5_jbxqg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.1944885, 0.28067505, 11.695976)
+
+[node name="large7" parent="SubViewport/World/decor/paths/path5" instance=ExtResource("5_jbxqg")]
+transform = Transform3D(0.9244596, 0, -0.38128012, 0, 1, 0, 0.38128012, 0, 0.9244596, -6.9999685, 0.27944934, 12.519598)
+
+[node name="large8" parent="SubViewport/World/decor/paths/path5" instance=ExtResource("5_jbxqg")]
+transform = Transform3D(0.79418135, 0, 0.6076808, 0, 1, 0, -0.6076808, 0, 0.79418135, -10.092496, 0.2827487, 4.5004535)
+
+[node name="large9" parent="SubViewport/World/decor/paths/path5" instance=ExtResource("5_jbxqg")]
+transform = Transform3D(0.48131007, 0, -0.8765504, 0, 1, 0, 0.8765504, 0, 0.48131007, -9.204499, 0.2827487, 13.744495)
+
+[node name="small3" parent="SubViewport/World/decor/paths/path5" instance=ExtResource("6_hs2o6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.463474, 0.18673277, 14.378912)
+
+[node name="large10" parent="SubViewport/World/decor/paths/path5" instance=ExtResource("5_jbxqg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.2640195, 0.29005826, 4.545941)
+
+[node name="small4" parent="SubViewport/World/decor/paths/path5" instance=ExtResource("6_hs2o6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.745773, 0.16319752, 16.686535)
+
+[node name="path2" type="Node3D" parent="SubViewport/World/decor/paths"]
+transform = Transform3D(0.04891953, 0, -0.99880284, 0, 1, 0, 0.99880284, 0, 0.04891953, 16.684746, 0, 26.591766)
+
+[node name="large6" parent="SubViewport/World/decor/paths/path2" instance=ExtResource("5_jbxqg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.1944885, 0.28067505, 11.695976)
+
+[node name="large7" parent="SubViewport/World/decor/paths/path2" instance=ExtResource("5_jbxqg")]
+transform = Transform3D(0.9244596, 0, -0.38128012, 0, 1, 0, 0.38128012, 0, 0.9244596, -6.9999685, 0.27944934, 12.519598)
+
+[node name="large8" parent="SubViewport/World/decor/paths/path2" instance=ExtResource("5_jbxqg")]
+transform = Transform3D(0.79418135, 0, 0.6076808, 0, 1, 0, -0.6076808, 0, 0.79418135, -10.092496, 0.2827487, 4.5004535)
+
+[node name="large9" parent="SubViewport/World/decor/paths/path2" instance=ExtResource("5_jbxqg")]
+transform = Transform3D(0.48131007, 0, -0.8765504, 0, 1, 0, 0.8765504, 0, 0.48131007, -9.204499, 0.2827487, 13.744495)
+
+[node name="small3" parent="SubViewport/World/decor/paths/path2" instance=ExtResource("6_hs2o6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.463474, 0.18673277, 14.378912)
+
+[node name="large10" parent="SubViewport/World/decor/paths/path2" instance=ExtResource("5_jbxqg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.2640195, 0.29005826, 4.545941)
+
+[node name="small4" parent="SubViewport/World/decor/paths/path2" instance=ExtResource("6_hs2o6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.745773, 0.16319752, 16.686535)
+
+[node name="tree" parent="SubViewport/World/decor" instance=ExtResource("7_ivhsj")]
+transform = Transform3D(0.026578233, 0, -0.9996467, 0, 1, 0, 0.9996467, 0, 0.026578233, 13.193886, 0.5000038, -24.016766)
+
+[node name="tree2" parent="SubViewport/World/decor" instance=ExtResource("7_ivhsj")]
+transform = Transform3D(0.40138838, 0, -0.91590804, 0, 1, 0, 0.91590804, 0, 0.40138838, -0.9135251, 0.5000019, 27.3497)
+
+[node name="pool" parent="SubViewport/World/decor" instance=ExtResource("8_pykff")]
+transform = Transform3D(0.20921755, 0, 2.992696, 0, 3.0000005, 0, -2.992696, 0, 0.20921755, -17.95944, -3.0234308, -8.096298)
+
+[node name="doghouse" parent="SubViewport/World/decor" instance=ExtResource("9_ixtfl")]
+transform = Transform3D(-2.367971, 0, 1.7425038, 0, 2.9400005, 0, -1.7425038, 0, -2.367971, 14.844109, 0.585562, 26.85734)
+
+[node name="fencing" type="Node3D" parent="SubViewport/World/decor"]
+
+[node name="rightfence" type="Node3D" parent="SubViewport/World/decor/fencing"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.131096, 0, 0)
+
+[node name="fence" parent="SubViewport/World/decor/fencing/rightfence" instance=ExtResource("10_nvap7")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 29.979013, 0.5, 16.6376)
+
+[node name="fence4" parent="SubViewport/World/decor/fencing/rightfence" instance=ExtResource("10_nvap7")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 29.979013, 0.5, -24.410284)
+
+[node name="fence5" parent="SubViewport/World/decor/fencing/rightfence" instance=ExtResource("10_nvap7")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 29.979013, 0.5, -29.463963)
+
+[node name="fence2" parent="SubViewport/World/decor/fencing/rightfence" instance=ExtResource("10_nvap7")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 29.979013, 0.5, 2.9855442)
+
+[node name="fence3" parent="SubViewport/World/decor/fencing/rightfence" instance=ExtResource("10_nvap7")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 29.979013, 0.5, -10.705885)
+
+[node name="topfence" type="Node3D" parent="SubViewport/World/decor/fencing"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -10.940113, 0, -0.14526558)
+
+[node name="fence" parent="SubViewport/World/decor/fencing/topfence" instance=ExtResource("10_nvap7")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 29.979013, 0.5, 16.6376)
+
+[node name="fence2" parent="SubViewport/World/decor/fencing/topfence" instance=ExtResource("10_nvap7")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 29.979013, 0.5, 2.9204178)
+
+[node name="fence3" parent="SubViewport/World/decor/fencing/topfence" instance=ExtResource("10_nvap7")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 29.979013, 0.5, -7.8677044)
+
+[node name="leftfence" type="Node3D" parent="SubViewport/World/decor/fencing"]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 10.905645, 0, -0.15981388)
+
+[node name="fence" parent="SubViewport/World/decor/fencing/leftfence" instance=ExtResource("10_nvap7")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 29.979013, 0.5, 16.6376)
+
+[node name="fence2" parent="SubViewport/World/decor/fencing/leftfence" instance=ExtResource("10_nvap7")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 29.979013, 0.5, 2.9204178)
+
+[node name="fence3" parent="SubViewport/World/decor/fencing/leftfence" instance=ExtResource("10_nvap7")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 29.979013, 0.5, -3.5553844)
+
+[node name="fence4" parent="SubViewport/World/decor/fencing/leftfence" instance=ExtResource("10_nvap7")]
+transform = Transform3D(2.4684274, 0, 1.7049532, 0, 3, 0, -1.7049532, 0, 2.4684274, 22.457558, 0.5, -14.770197)
+
+[node name="bottomfence" type="Node3D" parent="SubViewport/World/decor/fencing"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 7.6516323, 0, 0.05049324)
+
+[node name="fence" parent="SubViewport/World/decor/fencing/bottomfence" instance=ExtResource("10_nvap7")]
+transform = Transform3D(-0.34678772, 0, -2.979889, 0, 3, 0, 2.979889, 0, -0.34678772, 29.979013, 0.5, 16.6376)
+
+[node name="fence2" parent="SubViewport/World/decor/fencing/bottomfence" instance=ExtResource("10_nvap7")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 29.979013, 0.5, 2.9204178)
+
+[node name="fence3" parent="SubViewport/World/decor/fencing/bottomfence" instance=ExtResource("10_nvap7")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 29.979013, 0.5, -10.765306)
+
+[node name="picnic" type="Node3D" parent="SubViewport/World/decor"]
+transform = Transform3D(0.7849602, 0, -0.6195462, 0, 1, 0, 0.6195462, 0, 0.7849602, 12.103687, 0, -7.4433365)
+
+[node name="table" parent="SubViewport/World/decor/picnic" instance=ExtResource("11_t8y8d")]
+transform = Transform3D(0.8817402, 0, -0.47173533, 0, 1, 0, 0.47173533, 0, 0.8817402, 13.87607, 2.8812513, 14.547282)
+
+[node name="bench" parent="SubViewport/World/decor/picnic" instance=ExtResource("12_wuu8q")]
+transform = Transform3D(0.3356324, 0, 0.9419932, 0, 1, 0, -0.9419932, 0, 0.3356324, 11.499342, 0.41482878, 12.857826)
+
+[node name="bench2" parent="SubViewport/World/decor/picnic" instance=ExtResource("12_wuu8q")]
+transform = Transform3D(0.15560675, 0, 0.9878192, 0, 1, 0, -0.9878192, 0, 0.15560675, 16.482033, 0.41482878, 15.568394)
+
+[node name="cam" type="Camera3D" parent="SubViewport/World"]
+transform = Transform3D(1, -1.0004442e-11, 1.3969839e-09, 8.8903107e-10, 1, 4.2491592e-09, -9.313226e-10, 2.3283064e-10, 1, -1.4630038, 3.8186557, 0.19260003)
+script = ExtResource("4_8twl8")
+rotationSpeed = 0.05
+
+[node name="introbtns" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = 60.0
+offset_right = 60.0
+offset_bottom = 188.00012
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.0082203, 1)
+
+[node name="play" type="Button" parent="introbtns"]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+text = "Play game"
+
+[node name="info" type="Button" parent="introbtns"]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+text = "How-to"
+
+[node name="quit" type="Button" parent="introbtns"]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+text = "Quit"
+
+[node name="infoscreen" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="back" type="Button" parent="infoscreen"]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.574
+anchor_right = 0.5
+anchor_bottom = 0.574
+offset_left = -60.0
+offset_top = -12.919983
+offset_right = 60.0
+offset_bottom = 27.080017
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1, 1.0050337)
+text = "Back"
+
+[node name="Sprite2D" type="Sprite2D" parent="infoscreen"]
+position = Vector2(520, 390)
+scale = Vector2(0.48690477, 0.48690474)
+texture = ExtResource("5_ir5dn")
+
+[node name="Label" type="Label" parent="infoscreen"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.273
+anchor_top = 0.583
+anchor_right = 0.273
+anchor_bottom = 0.583
+offset_left = -134.16003
+offset_top = -36.640015
+offset_right = 132.44867
+offset_bottom = 36.359985
+theme_override_font_sizes/font_size = 42
+text = "Movement"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="infoscreen"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.731
+anchor_top = 0.587
+anchor_right = 0.731
+anchor_bottom = 0.587
+offset_left = -132.52002
+offset_top = -36.960022
+offset_right = 134.08862
+offset_bottom = 36.039978
+theme_override_font_sizes/font_size = 42
+text = "Interact"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Sprite2D2" type="Sprite2D" parent="infoscreen"]
+position = Vector2(1400, 390)
+scale = Vector2(0.5234987, 0.5234987)
+texture = ExtResource("6_1rrv8")
+
+[node name="Polygon2D" type="Polygon2D" parent="infoscreen"]
+color = Color(0.8745098, 0.84313726, 0.47058824, 1)
+polygon = PackedVector2Array(1329, 253, 1405, 253, 1405, 322, 1313, 322, 1313, 270, 1318, 259)
+
+[connection signal="pressed" from="introbtns/play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="introbtns/info" to="." method="_on_info_pressed"]
+[connection signal="pressed" from="introbtns/quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="infoscreen/back" to="." method="_on_back_pressed"]
