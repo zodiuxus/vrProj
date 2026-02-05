@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=4 uid="uid://cx6jliau0nt4f"]
+[gd_scene format=4 uid="uid://cx6jliau0nt4f"]
 
-[ext_resource type="Texture2D" uid="uid://ddcji8fuv5r7q" path="res://assets/models/bench_0_bench_0_albedo.jpg" id="1_tcgw5"]
-[ext_resource type="Texture2D" uid="uid://cunspq8h14nxi" path="res://assets/models/bench_0_bench_0_roughness.png" id="2_bp35n"]
-[ext_resource type="Texture2D" uid="uid://dfhou7ojvrayu" path="res://assets/models/bench_0_bench_0_normal.jpg" id="3_06huy"]
+[ext_resource type="Texture2D" uid="uid://ddcji8fuv5r7q" path="res://assets/models/finished/bench_0_bench_0_albedo.jpg" id="1_tcgw5"]
+[ext_resource type="Texture2D" uid="uid://cunspq8h14nxi" path="res://assets/models/finished/bench_0_bench_0_roughness.png" id="2_bp35n"]
+[ext_resource type="Texture2D" uid="uid://dfhou7ojvrayu" path="res://assets/models/finished/bench_0_bench_0_normal.jpg" id="3_06huy"]
+
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sl5bv"]
 resource_name = "bench_0"

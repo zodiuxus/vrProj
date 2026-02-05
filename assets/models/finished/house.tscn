@@ -1,7 +1,8 @@
-[gd_scene load_steps=472 format=4 uid="uid://onhj5w4sm8ab"]
+[gd_scene format=4 uid="uid://onhj5w4sm8ab"]
 
-[ext_resource type="Texture2D" uid="uid://c8abqj2ixkdhe" path="res://assets/models/house_aiStandardSurface1_baseColor.png" id="1_metfq"]
-[ext_resource type="Texture2D" uid="uid://1fyvukrso4tn" path="res://assets/models/house_aiStandardSurface1_normal.png" id="2_6syyc"]
+[ext_resource type="Texture2D" uid="uid://c8abqj2ixkdhe" path="res://assets/models/finished/house_aiStandardSurface1_baseColor.png" id="1_metfq"]
+[ext_resource type="Texture2D" uid="uid://1fyvukrso4tn" path="res://assets/models/finished/house_aiStandardSurface1_normal.png" id="2_6syyc"]
+
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k31j2"]
 resource_name = "aiStandardSurface1"

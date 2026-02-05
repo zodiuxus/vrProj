@@ -8,11 +8,15 @@
 
 config_version=5
 
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
 
 config/name="vr_proj"
 run/main_scene="uid://bn84664dyjsab"
-config/features=PackedStringArray("4.5", "Forward Plus")
+config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://assets/icon.svg"
 
 [display]
@@ -28,8 +32,16 @@ project/assembly_name="vr_proj"
 
 import/blender/enabled=false
 
+[input_devices]
+
+sensors/enable_accelerometer=true
+sensors/enable_gyroscope=true
+
+[rendering]
+
+textures/vram_compression/import_etc2_astc=true
+
 [xr]
 
-openxr/enabled=true
 openxr/form_factor=1
 shaders/enabled=true
