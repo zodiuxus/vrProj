@@ -12,8 +12,9 @@ An Android phone. Install and run.
 It's a rather simple Godot game that uses the phone's gyro as a way to look around the virtual world.
 Uses touch controls to move around and to interact with the world.
 
-The executable is in the zip file in the repo. Download, install, and run.
+The executable can be found [here](https://filebin.net/lhep9rp8uiuvq6ck). Download, unzip, install, and run.
 
 # Showcase
 
 [![Video](http://img.youtube.com/vi/NmpB7DUyWpA/0.jpg)](https://www.youtube.com/watch?v=NmpB7DUyWpA "Game showcase")
+
